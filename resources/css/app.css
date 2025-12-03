@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+#sidebar.show {
+    @apply translate-x-0;
+}
+
+#sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Firefox */
+#sidebar {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+#data-master-menu.show {
+    @apply translate-y-0;
+}
+
+.cvd.active {
+    @apply rotate-180;
+}
+
+/* Styling Select2 agar mirip Tailwind input */
+.select2-container--default .select2-selection--single {
+    padding: 0.5rem 1rem;
+    /* py-2 px-4 */
+    height: auto;
+    border: 1px solid #d1d5db;
+    /* border-gray-300 */
+    border-radius: 0.375rem;
+    /* rounded-md */
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    /* text-sm */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #374151;
+    /* text-gray-700 */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    right: 0.75rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.delay-\[100ms\] {
+    animation-delay: 100ms;
+}
+
+.delay-\[200ms\] {
+    animation-delay: 200ms;
+}
+
+.delay-\[300ms\] {
+    animation-delay: 300ms;
+}
+
+.delay-\[400ms\] {
+    animation-delay: 400ms;
+}
+
+.delay-\[500ms\] {
+    animation-delay: 500ms;
+}
+
+.delay-\[600ms\] {
+    animation-delay: 600ms;
+}
+
+.delay-\[700ms\] {
+    animation-delay: 700ms;
+}
