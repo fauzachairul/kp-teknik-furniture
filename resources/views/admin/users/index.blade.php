@@ -265,7 +265,13 @@
                 $('#editUserForm').on('submit', function(e) {
                     e.preventDefault();
                     const submitBtn = $(this).find('button[type="submit"]');
-                    submitBtn.prop('disabled', true).text('Menyimpan...');
+                    submitBtn.prop('disabled', true).html(`<div class="flex justify-between items-center gap-x-2"> 
+                        Menyimpan...
+                        <div
+                        class="w-10 h-10 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"
+                        ></div>
+
+                        </div>`);
 
                     const updateUrl = $(this).data('update-url');
                     const password = $('#editUserPassword').val();

@@ -167,7 +167,8 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+                    <button id="submitBtn" type="submit"
+                        class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
                         Simpan
                     </button>
                 </div>
@@ -290,6 +291,19 @@
                 setTimeout(() => loader.style.display = 'none', 500);
             });
 
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.disabled = true;
+                this.form.submit();
+                this.innerHTML = `<div class="flex justify-between items-center gap-x-2 flex-row-reverse"> 
+                        <span>Menyimpan...</span>
+                        <div
+                        class="w-5 h-5 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"
+                        ></div>
+
+                        </div>`;
+            });
 
             // Toast message reusable
             function showToast(message) {
@@ -362,8 +376,13 @@
 
                 $('#editRmForm').on('submit', function(e) {
                     e.preventDefault();
-                    const submitBtn = $(this).find('button[type="submit"]');
-                    submitBtn.prop('disabled', true).text('Menyimpan...');
+                    const submitBtn = $(this).findsubmitBtn.prop('disabled', true).html(`<div class="flex justify-between items-center gap-x-2"> 
+                        Menyimpan...
+                        <div
+                        class="w-10 h-10 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"
+                        ></div>
+
+                        </div>`);
 
 
                     const updateUrl = $(this).data('update-url');

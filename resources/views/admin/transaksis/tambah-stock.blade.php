@@ -42,7 +42,7 @@
                      @enderror
                  </div>
                  <div>
-                     <button type="submit"
+                     <button id="submitBtn" type="submit"
                          class="bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
                          Simpan
                      </button>
@@ -54,4 +54,21 @@
              </form>
          </div>
      </div>
+
+     @push('scripts')
+         <script>
+             document.getElementById('submitBtn').addEventListener('click', function(e) {
+                 e.preventDefault();
+                 this.disabled = true;
+                 this.form.submit();
+                 this.innerHTML = `<div class="flex justify-between items-center gap-x-2 flex-row-reverse"> 
+                        <span>Menyimpan...</span>
+                        <div
+                        class="w-5 h-5 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"
+                        ></div>
+
+                        </div>`;
+             });
+         </script>
+     @endpush
  </x-layout>

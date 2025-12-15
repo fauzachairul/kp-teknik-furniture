@@ -19,15 +19,11 @@ class DashboardController extends Controller
         $totalTxIn = StockIn::whereDate('created_at', Carbon::today())->count();
         $totalTxOut = StockOut::whereDate('tanggal_keluar', Carbon::today())->count();
 
-        $totalTransaksi = $totalTxIn + $totalTxOut;
-        $txInHariIni = StockIn::whereDate('created_at', Carbon::today())
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-        $txOutHariIni = StockOut::whereDate('tanggal_keluar', Carbon::today())
-            ->orderBy('tanggal_keluar', 'desc')
-            ->limit(10)
-            ->get();
+        $totalTxInBulan = StockIn::all()->count();
+        $totalTxOutBulan = StockOut::all()->count();
+
+        $totalTransaksiBulan = $totalTxInBulan + $totalTxOutBulan;
+
 
         $title = 'Dashboard';
         $lowStockMaterials = BahanBaku::whereColumn('stock', '<', 'min_stock')->get();
@@ -83,9 +79,9 @@ class DashboardController extends Controller
 
         return view('admin.index', compact(
             'title',
-            'txInHariIni',
-            'txOutHariIni',
-            'totalTransaksi',
+            'totalTxIn',
+            'totalTxOut',
+            'totalTransaksiBulan',
             'lowStockMaterials',
             'rawMaterials',
             'categories',

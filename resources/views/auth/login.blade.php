@@ -26,9 +26,12 @@
 
         @if ($errors->any())
             <div class="mb-4 text-sm text-red-600">
-                <ul class="list-disc pl-5">
+                <ul id="toastVal"
+                    class="list-none px-5 w-full py-4 bg-red-200 rounded flex justify-between items-center">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="font-medium">{{ $error }}</li>
+                        <button id="btn-close" class="bg-red-300 p-2 rounded active:bg-red-400"><i
+                                data-feather="x-square" class="text-gray-100"></i></button>
                     @endforeach
                 </ul>
             </div>
@@ -75,6 +78,15 @@
     @vite('resources/js/script.js')
     <script>
         feather.replace();
+
+        const btnClose = document.getElementById('btn-close');
+
+
+
+        btnClose.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.parentElement.style.display = 'none';
+        });
     </script>
 </body>
 

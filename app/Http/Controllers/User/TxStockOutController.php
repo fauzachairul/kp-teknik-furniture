@@ -43,7 +43,7 @@ class TxStockOutController extends Controller
         // Validasi input
         $validated = $request->validate([
             'jenis_pengeluaran' => 'required|in:produksi,rusak,hilang,lainnya',
-            'bahan_baku_id.*' => 'required|exists:raw_materials,id',
+            'bahan_baku_id.*' => 'required|exists:bahan_bakus,id',
             'jumlah.*' => 'required|integer|min:1',
         ]);
 

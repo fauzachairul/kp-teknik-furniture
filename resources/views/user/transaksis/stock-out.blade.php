@@ -58,7 +58,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 detail_row">
                             <!-- Bahan -->
                             <div class="md:col-span-4">
-                                <select name="raw_material_id[]" required class="bahan-select w-full">
+                                <select name="bahan_baku_id[]" required class="bahan-select w-full">
                                     <option value="">Pilih Bahan</option>
                                     @foreach ($raw_material as $b)
                                         <option value="{{ $b->id }}">{{ $b->name }} (Stok:

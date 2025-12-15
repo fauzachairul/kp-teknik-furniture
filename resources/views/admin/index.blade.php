@@ -13,12 +13,12 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
 
         <div
-            class="card bg-sky-200 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-100">
+            class="card bg-blue-300 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-100">
             <div>
-                <p class="text-2xl font-medium text-slate-600">Jumlah Bahan Baku</p>
+                <p class="text-2xl font-medium text-slate-800">Jumlah Bahan Baku</p>
                 <p class="text-sky-900 text-xl font-bold">
                     {{ $rawMaterials }}
-                    <span class="text-slate-600 font-medium">Barang</span>
+                    <span class="text-slate-800 font-medium">Barang</span>
                 </p>
             </div>
         </div>
@@ -26,29 +26,47 @@
         <div
             class="card bg-yellow-200 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-200">
             <div>
-                <p class="text-2xl font-medium text-slate-600">Jumlah Kategori</p>
+                <p class="text-2xl font-medium text-slate-800">Jumlah Kategori</p>
                 <p class="text-yellow-800 text-xl font-bold">{{ $categories }} <span
-                        class="text-slate-600 font-medium">Kategori</span></p>
+                        class="text-slate-800 font-medium">Kategori</span></p>
             </div>
         </div>
 
         <div
-            class="card bg-teal-100 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-300">
+            class="card bg-teal-300 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-300">
             <div>
-                <p class="text-2xl font-medium text-slate-600">Jumlah Satuan</p>
+                <p class="text-2xl font-medium text-slate-800">Jumlah Satuan</p>
                 <p class="text-teal-700 text-xl font-bold"> {{ $units }} <span
-                        class="text-slate-600 font-medium">Jenis Satuan</span></p>
+                        class="text-slate-800 font-medium">Jenis Satuan</span></p>
             </div>
         </div>
 
         <div
-            class="card bg-red-200 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-400">
+            class="card bg-indigo-400 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-400">
             <div>
-                <p class="text-2xl font-medium text-slate-600">Transaksi Hari Ini</p>
-                <p class="text-red-900 text-xl font-bold">{{ $totalTransaksi }}<span
-                        class="text-slate-600 font-medium">Transaksi</span></p>
+                <p class="text-2xl font-medium text-slate-800">Transaksi Bulan Ini</p>
+                <p class="text-indigo-900 text-xl font-bold">{{ $totalTransaksiBulan }}<span
+                        class="text-slate-800 font-medium">Transaksi</span></p>
             </div>
         </div>
+        <div
+            class="card bg-lime-300 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-400">
+            <div>
+                <p class="text-2xl font-medium text-slate-800">Stok Keluar Hari Ini</p>
+                <p class="text-lime-900 text-xl font-bold">{{ $totalTxOut }}<span
+                        class="text-slate-800 font-medium">Transaksi</span></p>
+            </div>
+        </div>
+
+        <div
+            class="card bg-violet-300 rounded-xl flex justify-center items-center py-8 shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-400">
+            <div>
+                <p class="text-2xl font-medium text-slate-800">Stok Masuk Hari Ini</p>
+                <p class="text-violet-900 text-xl font-bold">{{ $totalTxIn }}<span
+                        class="text-slate-800 font-medium">Transaksi</span></p>
+            </div>
+        </div>
+
 
     </div>
 
