@@ -30,6 +30,23 @@ class BahanBakuController extends Controller
             });
         }
 
+        if ($request->filled('stock_status')) {
+            if ($request->stock_status === 'habis') {
+                $query->where('stock', 0);
+            }
+
+            if ($request->stock_status === 'rendah') {
+                $query->whereColumn('stock', '<', 'min_stock')
+                    ->where('stock', '>', 0);
+            }
+
+            if ($request->stock_status === 'normal') {
+                $query->whereColumn('stock', '>=', 'min_stock');
+            }
+        }
+
+
+
         $units = Unit::all();
         $categories = Category::all();
 
@@ -39,16 +56,6 @@ class BahanBakuController extends Controller
         return view('admin.bahanBakus.index', compact('materials', 'title', 'units', 'categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {
-    //     $categories = Category::all();
-    //     $units = Unit::all();
-    //     $title = 'Tambah Material';
-    //     return view('admin.rawMaterials.tambah', compact('categories', 'units', 'title'));
-    // }
 
     /**
      * Store a newly created resource in storage.

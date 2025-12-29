@@ -48,7 +48,7 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">No</th>
-                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Nama Kategori</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Nama Satuan</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Aksi</th>
                 </tr>
             </thead>
@@ -116,7 +116,8 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+                    <button id="submitBtn" type="submit"
+                        class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
                         Simpan
                     </button>
                 </div>
@@ -185,6 +186,31 @@
                 const loader = document.getElementById('page-loader');
                 loader.classList.add('opacity-0');
                 setTimeout(() => loader.style.display = 'none', 500);
+            });
+
+            const submitBtn = document.getElementById('submitBtn');
+            const form = submitBtn.form;
+
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // cegah submit default sementara
+
+                // Cek validitas form
+                if (!form.checkValidity()) {
+                    // Form tidak valid → biarkan browser menampilkan peringatan
+                    form.reportValidity(); // ini menampilkan pesan validasi bawaan
+                    return;
+                }
+
+                // Form valid → disable tombol & ubah tampilan
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `
+        <div class="flex justify-between items-center gap-x-2 flex-row-reverse"> 
+            <span>Menyimpan...</span>
+            <div class="w-5 h-5 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
+        </div>
+    `;
+
+                form.submit(); // submit form
             });
 
             // Toast message reusable

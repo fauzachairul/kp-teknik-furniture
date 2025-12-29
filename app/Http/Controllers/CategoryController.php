@@ -87,6 +87,11 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
+        if ($category->rawMaterials()->count() > 0) {
+            return redirect()->back()
+                ->with('error', 'Kategori tidak bisa dihapus karena masih digunakan');
+        }
+
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');

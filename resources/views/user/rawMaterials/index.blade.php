@@ -36,7 +36,7 @@
                 @forelse ($materials as $material)
                     <tr class="odd:bg-white even:bg-gray-50">
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $loop->iteration }}</td>
-                        <td class="px-4 py-2 text-sm text-gray-800">{{ $material->raw_material_kd }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-800">{{ $material->bahan_baku_kd }}</td>
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $material->name }}</td>
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $material->category->name }}</td>
                         <td class="px-4 py-2 text-sm text-gray-800">{{ $material->unit->name }}</td>

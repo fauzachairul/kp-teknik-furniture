@@ -12,10 +12,40 @@ class StockInController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function indexTambah()
+    public function indexTambah(Request $request)
     {
-        $rawMaterials = BahanBaku::all();
         $title = 'Halaman Transaksi';
+
+        $query = BahanBaku::with(['category', 'unit']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('bahan_baku_kd', 'like', "%$search%")
+                    ->orWhere('name', 'like', "%$search%")
+                    ->orWhereHas('category', function ($q2) use ($search) {
+                        $q2->where('name', 'like', "%$search%");
+                    });
+            });
+        }
+
+        if ($request->filled('stock_status')) {
+            if ($request->stock_status === 'habis') {
+                $query->where('stock', 0);
+            }
+
+            if ($request->stock_status === 'rendah') {
+                $query->whereColumn('stock', '<', 'min_stock')
+                    ->where('stock', '>', 0);
+            }
+
+            if ($request->stock_status === 'normal') {
+                $query->whereColumn('stock', '>=', 'min_stock');
+            }
+        }
+
+        $rawMaterials = $query->simplePaginate(5);
 
         return view('admin.transaksis.stok-masuk', compact('rawMaterials', 'title'));
     }

@@ -15,6 +15,6 @@ class Category extends Model
 
     public function rawMaterials(): HasMany
     {
-        return $this->hasMany(BahanBaku::class, 'bahan_baku_id');
+        return $this->hasMany(BahanBaku::class, 'category_id');
     }
 }

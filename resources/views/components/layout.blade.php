@@ -20,16 +20,6 @@
 
     <main class="flex h-auto relative overflow-hidden">
 
-        @if ($errors->any())
-            <div class="absolute top-5 right-5 p-4 bg-red-500 text-white z-99999">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <x-side-bar></x-side-bar>
 
         <div class="content-wrapper grow relative lg:ml-64 pb-10 overflow-hidden">
@@ -41,6 +31,26 @@
             </div>
         </div>
     </main>
+
+    @if (session('error'))
+        <div id="alert-error"
+            class="mb-4 flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 shadow-sm absolute top-4 right-4 z-10 cursor-pointer">
+            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span class="font-medium">{{ session('error') }}</span>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div id="alert-error"
+            class="mb-4 flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 shadow-sm absolute top-4 right-4 z-10 cursor-pointer">
+            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span class="font-medium">{{ $errors->first() }}</span>
+        </div>
+    @endif
 
     @if (session('success'))
         <div id="toast-succes"
@@ -92,6 +102,15 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         feather.replace();
+        const alertError = document.getElementById('alert-error');
+        if (alertError) {
+            alertError.addEventListener('click', () => {
+                alertError.remove();
+            });
+            setTimeout(() => {
+                alertError.remove();
+            }, 5000);
+        }
     </script>
 
     @stack('scripts')

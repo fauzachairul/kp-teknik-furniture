@@ -26,6 +26,22 @@
                         class="flex-1 px-3 py-1 border rounded-lg border-gray-300 focus:border-transparent focus:outline-none focus:ring-blue-400 focus:ring-1"
                         type="text" name="search" id="search" placeholder="Cari sesuatu...."
                         value="{{ request('search') }}">
+
+                    <!-- Filter Stok -->
+                    <select name="stock_status"
+                        class="px-3 py-1 border rounded-lg border-gray-300 focus:ring-1 focus:ring-blue-400">
+                        <option value="">Semua Stok</option>
+                        <option value="habis" {{ request('stock_status') == 'habis' ? 'selected' : '' }}>
+                            Stok Habis
+                        </option>
+                        <option value="rendah" {{ request('stock_status') == 'rendah' ? 'selected' : '' }}>
+                            Stok Rendah
+                        </option>
+                        <option value="normal" {{ request('stock_status') == 'normal' ? 'selected' : '' }}>
+                            Stok Normal
+                        </option>
+                    </select>
+
                     <div class="flex gap-2">
                         <button class="rounded-lg px-4 py-1 bg-slate-900 text-gray-100 w-full sm:w-auto">Cari</button>
                         @if (request()->has('search') && request('search') !== '')
@@ -43,7 +59,7 @@
         </div>
 
         <!-- TABEL MATERIAL -->
-        <div class="overflow-x-auto rounded">
+        <div class="overflow-x-auto rounded mb-5">
             <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg shadow-sm">
                 <thead class="bg-gray-100">
                     <tr>
@@ -292,17 +308,34 @@
             });
 
             const submitBtn = document.getElementById('submitBtn');
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.disabled = true;
-                this.form.submit();
-                this.innerHTML = `<div class="flex justify-between items-center gap-x-2 flex-row-reverse"> 
-                        <span>Menyimpan...</span>
-                        <div
-                        class="w-5 h-5 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"
-                        ></div>
+            const form = submitBtn.form;
 
-                        </div>`;
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // cegah submit default sementara
+
+                // Cek validitas form
+                if (!form.checkValidity()) {
+                    // Form tidak valid → biarkan browser menampilkan peringatan
+                    form.reportValidity(); // ini menampilkan pesan validasi bawaan
+                    return;
+                }
+
+                // Form valid → disable tombol & ubah tampilan
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `
+        <div class="flex justify-between items-center gap-x-2 flex-row-reverse"> 
+            <span>Menyimpan...</span>
+            <div class="w-5 h-5 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
+        </div>
+    `;
+
+                form.submit(); // submit form
+            });
+
+            // Opsional: jika ingin tombol kembali aktif saat user mengubah input
+            form.addEventListener('input', () => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Simpan'; // kembalikan teks tombol
             });
 
             // Toast message reusable

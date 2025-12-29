@@ -13,6 +13,22 @@
                         class="px-3 py-1 border rounded-lg border-gray-300 focus:border-transparent focus:outline-none focus:ring-blue-400 focus:ring-1 mr-4"
                         type="text" name="search" id="search" placeholder="Cari sesuatu...."
                         value="{{ request('search') }}">
+
+                    <!-- Filter Stok -->
+                    <select name="stock_status"
+                        class="px-3 py-1 border rounded-lg border-gray-300 focus:ring-1 focus:ring-blue-400">
+                        <option value="">Semua Stok</option>
+                        <option value="habis" {{ request('stock_status') == 'habis' ? 'selected' : '' }}>
+                            Stok Habis
+                        </option>
+                        <option value="rendah" {{ request('stock_status') == 'rendah' ? 'selected' : '' }}>
+                            Stok Rendah
+                        </option>
+                        <option value="normal" {{ request('stock_status') == 'normal' ? 'selected' : '' }}>
+                            Stok Normal
+                        </option>
+                    </select>
+
                     <button class="rounded-lg px-4 py-1 bg-slate-900 text-gray-100">Cari</button>
                     @if (request()->has('search') && request('search') !== '')
                         <a href="{{ route('admin.transaksis.index') }}"
@@ -71,7 +87,7 @@
             </tbody>
         </table>
 
-        {{-- {{ $rawMaterials->links() }} --}}
+        {{ $rawMaterials->links() }}
     </div>
 
 </x-layout>

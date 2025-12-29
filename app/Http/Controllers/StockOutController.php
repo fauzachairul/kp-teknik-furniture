@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\StockOut;
 use App\Models\DetailOut;
-use App\Models\RawMaterial;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;

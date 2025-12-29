@@ -18,26 +18,12 @@
                     <i data-feather="home"></i>
                     <p class="font-semibold text-slate-800 ms-3 whitespace-nowrap">Dashboard</p>
                 </a>
-
-                <!-- Data Master -->
-                <div class="menu-toggle w-full py-2 px-2 rounded-lg font-semibold text-slate-800 cursor-pointer flex items-center justify-between hover:bg-slate-200"
-                    data-target="data-master-menu" data-icon="cvd">
-                    <div class="flex items-center gap-3">
-                        <i data-feather="file"></i>
-                        <p>Data Master</p>
-                    </div>
-                    <i id="cvd" class="cvd transition duration-150" data-feather="chevron-down"></i>
-                </div>
-
-                <div id="data-master-menu"
-                    class="w-full flex flex-col gap-2 bg-[#F6F5F8] p-4 shadow 
-                    {{ request()->is('user/raw-materials*') ? '' : 'hidden' }}">
-                    <a href="{{ route('user.rawMaterials.index') }}"
-                        class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-200 text-sm 
+                <!-- Data Bahan Baku -->
+                <a href="{{ route('user.rawMaterials.index') }}"
+                    class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-200 text-sm flex items-center gap-3
                         {{ request()->is('user/raw-materials*') ? 'bg-slate-200' : '' }}">
-                        Data Bahan Baku
-                    </a>
-                </div>
+                    <i data-feather="file"></i><span>Data Bahan Baku</span>
+                </a>
 
                 <!-- Transaksi Master -->
                 <div class="menu-toggle w-full py-2 px-2 rounded-lg font-semibold text-slate-800 cursor-pointer flex items-center justify-between hover:bg-slate-200"
@@ -54,29 +40,25 @@
                     {{ request()->is('user/transaksis*') ? '' : 'hidden' }}">
 
                     <!-- Transaksi Keluar -->
-                    <div class="menu-toggle w-full py-2 px-2 rounded-lg font-semibold text-slate-800 cursor-pointer flex items-center justify-between hover:bg-slate-200"
-                        data-target="transaksi-keluar-menu" data-icon="cvd-4">
-                        <div class="flex items-center gap-3">
-                            <i data-feather="log-out" class="w-[18px]"></i>
-                            <p class="text-sm">Transaksi Stok Keluar</p>
-                        </div>
-                        <i class="cvd transition duration-150" data-feather="chevron-down"></i>
-                    </div>
-
-                    <div id="transaksi-keluar-menu"
-                        class="w-full flex flex-col gap-2 bg-slate-200 p-4 shadow rounded-md 
-                        {{ request()->is('user/transaksis/*') || request()->is('user/transaksis/*') ? '' : 'hidden' }}">
+                    <div class="menu-toggle w-full rounded-lg font-semibold text-slate-800 cursor-pointer flex items-center justify-between flex-col gap-y-2"
+                        data-icon="cvd-4">
                         <a href="{{ route('user.transaksis.create') }}"
-                            class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-300 text-sm 
-                            {{ request()->is('user/transaksis') ? 'bg-slate-300' : '' }}">
+                            class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-200 text-sm 
+                            {{ request()->is('user/transaksis') ? 'bg-slate-200' : '' }}">
                             Stock Keluar
                         </a>
                         <a href="{{ route('user.transaksis.history-out') }}"
-                            class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-300 text-sm 
-                            {{ request()->is('user/transaksis/history-out') ? 'bg-slate-300' : '' }}">
+                            class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-200 text-sm 
+                            {{ request()->is('user/transaksis/history-out') ? 'bg-slate-200' : '' }}">
                             Riwayat Stock Keluar
                         </a>
                     </div>
+
+                    {{-- <div id="transaksi-keluar-menu"
+                        class="w-full flex flex-col gap-2 bg-slate-200 p-4 shadow rounded-md 
+                        {{ request()->is('user/transaksis/*') || request()->is('user/transaksis/*') ? '' : 'hidden' }}">
+
+                    </div> --}}
                 </div>
 
 
