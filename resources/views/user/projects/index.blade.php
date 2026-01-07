@@ -1,4 +1,4 @@
-<x-layout>
+<x-user-layout>
     <x-slot:title>
         {{ $title }}
     </x-slot>
@@ -9,33 +9,13 @@
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
     </div>
 
-    @if (session('error'))
-        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
-            class="fixed top-5 right-5 bg-red-600 text-white px-4 py-2 rounded shadow-lg"
-            x-html="`{!! session('error') !!}`">
-        </div>
-    @endif
-
-    <div class="flex justify-end mt-5">
-        <button onclick="document.getElementById('projectsModal').classList.remove('hidden')"
-            class="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition md:hidden">
-            Tambah Project
-        </button>
-
-    </div>
-
     <div
         class="bg-white p-4 rounded-md shadow-md transform transition duration-700 opacity-0 translate-y-5 animate-fadeInUp delay-300 relative">
 
         <div class="flex justify-between items-center mb-6">
 
-            <button onclick="document.getElementById('projectsModal').classList.remove('hidden')"
-                class="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition hidden md:block">
-                Tambah Project
-            </button>
-
             <!-- Form Pencarian & Filter -->
-            <form action="{{ route('projects.index') }}" method="GET" class="flex flex-wrap gap-3 items-center">
+            <form action="{{ route('projects.user.index') }}" method="GET" class="flex flex-wrap gap-3 items-center">
                 <!-- Search -->
                 <div class="relative">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari project..."
@@ -65,7 +45,7 @@
 
                 <!-- Tombol reset -->
                 @if (request('search') || request('status'))
-                    <a href="{{ route('projects.index') }}"
+                    <a href="{{ route('projects.user.index') }}"
                         class="text-gray-600 underline hover:text-gray-800 text-sm ml-1 px-4 py-2 rounded-md border">
                         Reset
                     </a>
@@ -86,6 +66,7 @@
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Selesai</th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Aksi</th>
+
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -110,30 +91,12 @@
                                     {{ ucfirst($project->status) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-center">
-                                <div class="flex justify-center gap-2">
-                                    <button class="edit-project-btn bg-blue-500 text-white px-3 py-1 rounded"
-                                        data-id="{{ $project->id }}"
-                                        data-edit-url="{{ route('project.edit', $project->id) }}"
-                                        data-update-url="{{ route('project.update', $project->id) }}">
-                                        Edit
-                                    </button>
 
-                                    <form class="delete-form"
-                                        data-delete-url="{{ route('project.hapus', $project->id) }}">
-                                        <button type="button"
-                                            class="p-2 bg-red-600 rounded-md text-white open-delete-modal">
-                                            <i data-feather="trash-2"></i>
-                                        </button>
-                                    </form>
-
-                                    <a href="{{ route('projects.bahan-keluar', $project->id) }}"
-                                        class="bg-emerald-600 text-white px-3 py-1 rounded hover:bg-emerald-700">
-                                        Bahan Yang Terpakai
-                                    </a>
-
-                                </div>
-                            </td>
+                            <td class="px-4 py-2 text-sm text-gray-800"> <a
+                                    href="{{ route('projects.bahan-keluar.user', $project->id) }}"
+                                    class="bg-emerald-600 text-white px-3 py-1 rounded hover:bg-emerald-700">
+                                    Bahan Yang Terpakai
+                                </a></td>
                         </tr>
                     @empty
                         <tr>
@@ -457,4 +420,4 @@
             });
         </script>
     @endpush
-</x-layout>
+</x-user-layout>

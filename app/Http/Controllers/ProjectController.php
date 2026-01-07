@@ -4,13 +4,41 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Project;
+use App\Models\StockOut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function userIndex(Request $request)
+    {
+
+        $query = Project::query();
+
+        // Search berdasarkan nama project atau customer
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('customer_name', 'like', "%{$search}%")
+                    ->orWhere('project_kode', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter berdasarkan status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $projects = $query->orderBy('created_at', 'desc')->get();
+
+
+        $title = 'Halaman Project';
+        return view('user.projects.index', compact('projects', 'title'));
+    }
     public function index(Request $request)
     {
 
@@ -85,17 +113,99 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success',  'Project Telah Dibuat');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // public function bahanKeluar(Project $project)
+    // {
+    //     $stockOuts = StockOut::with(['detailOuts.rawMaterial'])
+    //         ->where('project_id', $project->id)
+    //         ->where('jenis_pengeluaran', 'produksi')
+    //         ->latest()
+    //         ->get();
+
+    //     $title = "Bahan Keluar - {$project->name}";
+
+    //     return view('admin.projects.bahan-keluar', compact(
+    //         'project',
+    //         'stockOuts',
+    //         'title'
+    //     ));
+    // }
+
+
+    public function bahanKeluar(Project $project)
     {
-        //
+        $stockOuts = $project->stockOuts()
+            ->with([
+                'user:id,name',
+                'detailOuts.rawMaterial.unit'
+            ])
+            ->where('jenis_pengeluaran', 'produksi')
+            ->get();
+
+        $bahanTerpakai = $stockOuts
+            ->flatMap(function ($stockOut) {
+                return $stockOut->detailOuts->map(function ($detail) use ($stockOut) {
+                    return [
+                        'bahan_id' => $detail->rawMaterial->id,
+                        'nama'     => $detail->rawMaterial->name,
+                        'satuan'   => $detail->rawMaterial->unit->name,
+                        'jumlah'   => $detail->jumlah,
+                        'user'     => $stockOut->user->name,
+                    ];
+                });
+            })
+            ->groupBy('bahan_id')
+            ->map(function ($items) {
+                return (object) [
+                    'name'          => $items->first()['nama'],
+                    'satuan'        => $items->first()['satuan'],
+                    'total_jumlah'  => $items->sum('jumlah'),
+                    'pengeluar'     => $items->pluck('user')->unique()->implode(', '),
+                ];
+            })
+            ->sortBy('name')
+            ->values();
+
+        $title = "Rekap Bahan Terpakai - {$project->name}";
+
+        return view('admin.projects.bahan-keluar', compact(
+            'project',
+            'bahanTerpakai',
+            'title'
+        ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+    public function bahanKeluarUser(Project $project)
+    {
+        $bahanTerpakai = DB::table('detail_outs')
+            ->join('stock_outs', 'detail_outs.stock_out_id', '=', 'stock_outs.id')
+            ->join('bahan_bakus', 'detail_outs.bahan_baku_id', '=', 'bahan_bakus.id')
+            ->join('units', 'bahan_bakus.unit_id', '=', 'units.id')
+            ->where('stock_outs.project_id', $project->id)
+            ->where('stock_outs.jenis_pengeluaran', 'produksi')
+            ->select(
+                'bahan_bakus.id',
+                'bahan_bakus.name',
+                'units.name as satuan',
+                DB::raw('SUM(detail_outs.jumlah) as total_jumlah')
+            )
+            ->groupBy(
+                'bahan_bakus.id',
+                'bahan_bakus.name',
+                'units.name'
+            )
+            ->orderBy('bahan_bakus.name')
+            ->get();
+
+        $title = "Rekap Bahan Terpakai - {$project->name}";
+
+        return view('user.projects.bahan-keluar', compact(
+            'project',
+            'bahanTerpakai',
+            'title'
+        ));
+    }
+
     public function edit(string $id)
     {
         $project = Project::findOrFail($id);

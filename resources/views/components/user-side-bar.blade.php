@@ -25,6 +25,14 @@
                     <i data-feather="file"></i><span>Data Bahan Baku</span>
                 </a>
 
+                {{-- data project --}}
+                <a href="{{ route('projects.user.index') }}"
+                    class="w-full py-2 px-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-200 text-sm flex items-center gap-3
+                        {{ request()->is('user/projects*') ? 'bg-slate-200' : '' }}">
+                    <i data-feather="file"></i><span>Data Project</span>
+                </a>
+
+
                 <!-- Transaksi Master -->
                 <div class="menu-toggle w-full py-2 px-2 rounded-lg font-semibold text-slate-800 cursor-pointer flex items-center justify-between hover:bg-slate-200"
                     data-target="transaksi-master-menu" data-icon="cvd-2">

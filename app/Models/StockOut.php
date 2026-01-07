@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StockOut extends Model
 {
+    protected $casts = [
+        'tanggal_keluar' => 'datetime',
+    ];
     protected $fillable = [
         'user_id',
         'stock_out_kode',

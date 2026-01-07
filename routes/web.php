@@ -106,6 +106,11 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
         Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('project.edit');
         Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('project.update');
         Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('project.hapus');
+        Route::get(
+            '/projects/{project}/bahan-keluar',
+            [ProjectController::class, 'bahanKeluar']
+        )->name('projects.bahan-keluar');
+
 
         //users
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -139,4 +144,10 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     Route::post('/transaksis/stock-out', [TxStockOutController::class, 'store'])->name('user.stock-out.store');
 
     Route::get('/transaksis/stock-out/{id}', [TxStockOutController::class, 'show'])->name('stock-out-detail.show');
+
+    Route::get('/projects', [ProjectController::class, 'userIndex'])->name('projects.user.index');
+    Route::get(
+        '/projects/{project}/bahan-keluar',
+        [ProjectController::class, 'bahanKeluarUser']
+    )->name('projects.bahan-keluar.user');
 });
